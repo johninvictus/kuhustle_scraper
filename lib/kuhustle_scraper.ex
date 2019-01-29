@@ -3,16 +3,20 @@ defmodule KuhustleScraper do
   Documentation for KuhustleScraper.
   """
 
-  @doc """
-  Hello world.
+  alias KuhustleScraper.Kuhustle
+  alias KuhustleScraper.Scrapper
 
-  ## Examples
+  def get_jobs do
+    response =
+      Kuhustle.get("/jobs")
+      |> Kuhustle.process_response()
 
-      iex> KuhustleScraper.hello()
-      :world
+    case response do
+      {:ok, body, _resp} ->
+        Scrapper.get(body)
 
-  """
-  def hello do
-    :world
+      _ ->
+        :error
+    end
   end
 end
